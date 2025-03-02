@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Client2";
+}
+
+<h1>Client 2</h1>
+
+<div>
+    <h3>Messages:</h3>
+    <ul id="messagesList"></ul>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5179/messageHub") // Используйте правильный URL
+        .build();
+    
+    connection.on("ReceiveMessage", (message) => {
+        const li = document.createElement("li");
+        li.textContent = `Sequence: ${message.sequenceNumber}, Text: ${message.text}, Time: ${message.timeStamp}`;
+        document.getElementById("messagesList").appendChild(li);
+    });
+    
+    connection.start()
+        .then(() => console.log("SignalR connection started."))
+        .catch(err => console.error("SignalR connection error: ", err));
+</script>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Message.Domain.Models.Message>
+
+@{
+    ViewBag.Title = "Client3";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().MessageId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().SequenceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().TimeStamp)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SequenceNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+        </tr>
+    }
+</table>

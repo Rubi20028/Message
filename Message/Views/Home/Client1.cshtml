@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Client1";
+}
+
+<h4 class="mb-3 text-muted"> Текст сообщения</h4>
+<form id="createMessageForm">
+    <input name="message" type="text" class="form-control"/>
+    <button id="createMessage" class="btn btn-primary">Отправить</button>
+</form>
+
+@section Scripts
+{
+    <script>
+        $('#createMessage').on('click', function (e) {
+            e.preventDefault();
+
+            var Text = $('input[name="message"]').val();
+
+            if (Text.length > 128) {
+                alert("Текст сообщения не должен превышать 128 символов.");
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SubmitMessage", "Home")',
+                contentType: 'application/json', 
+                data: JSON.stringify({ Text: Text }), 
+                success: function (response) {
+                    console.log("Сообщение отправлено!", response);
+                    alert("Сообщение успешно отправлено!");
+                },
+                error: function (error) {
+                    if (error.status === 400) {
+                        alert(error.responseText); 
+                    } else {
+                        console.error("Ошибка при отправке сообщения:", error);
+                    }
+                }
+            });
+        });
+    </script>
+}
